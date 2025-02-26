@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="'Pizza ' + ${pizza.name}">Pizza Details</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <header th:replace="fragments/fragments-1 :: header('Pizza Details')"></header>
+
+        <div class="card shadow-sm">
+            <img th:src="${pizza.imageUrl}" class="card-img-top" alt="Pizza Image" style="height: 300px; object-fit: cover;">
+            <div class="card-body">
+                <h2 class="card-title" th:text="${pizza.name}"></h2>
+                <p class="card-text" th:text="${pizza.description}"></p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong class="text-body-secondary fs-4" th:text="'€' + ${#numbers.formatDecimal(pizza.price, 1, 2)}"></strong>
+                    <div class="btn-group">
+                        <div class="btn-group gap-2">
+                            <div>
+                                <a th:href="@{'/pizzas/edit/' + ${pizza.id}}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            </div>
+                            <form th:action="@{'/pizzas/delete/' + ${pizza.id}}" method="POST">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a th:href="@{/pizzas}" class="btn btn-primary">Back to Menu</a>
+        </div>
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
