@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pizza Menu</title>
+    <title>Pizzeria Bella Napoli</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
 </head>
 <body class="bg-light">
     <div class="container py-4">
-        <header class="pb-3 mb-4 border-bottom">
-            <h1 class="display-4 text-primary">Our Pizza Menu</h1>
-        </header>
-
+        <header th:replace="fragments/fragments-1 :: header('Our Pizza Menu')"></header>
         <div class="alert alert-warning" th:if="${pizzas.empty}">
             No pizzas available at the moment.
         </div>
@@ -22,8 +19,9 @@
             </th:block>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-4 d-flex justify-content-between">
             <a href="/pizzas/create" class="btn btn-success">Add New Pizza</a>
+            <a th:href="@{/pizzas}" class="btn btn-primary" th:if="${pizzas.empty}">Back to Menu</a>
         </div>
     </div>
 
