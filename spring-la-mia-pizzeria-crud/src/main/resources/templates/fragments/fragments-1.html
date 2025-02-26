@@ -1,0 +1,26 @@
+<!-- Card Fragment -->
+
+<div th:fragment="card(pizza)" class="col">
+    <div class="card h-100 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${pizza.name}">Pizza Name</h5>
+            <p class="card-text" th:text="${pizza.description}">Description</p>
+            <p class="card-text">
+                <small class="text-muted" th:text="'€' + ${#numbers.formatDecimal(pizza.price, 1, 2)}">Price</small>
+            </p>
+        </div>
+        <div class="card-footer bg-transparent border-top-0 pb-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group gap-1">
+                    <a th:href="@{'/pizzas/' + ${pizza.id}}" class="btn btn-sm btn-outline-primary">View Details</a>
+                    <a th:href="@{'/pizzas/edit/' + ${pizza.id}}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                </div>
+                <form th:action="@{'/pizzas/delete/' + ${pizza.id}}" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Card Fragment -->
