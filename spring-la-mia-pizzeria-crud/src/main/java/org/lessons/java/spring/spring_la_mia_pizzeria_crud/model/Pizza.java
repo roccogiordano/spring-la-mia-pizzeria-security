@@ -6,10 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "pizzas")
@@ -20,7 +20,7 @@ public class Pizza {
     private Integer id;
 
     @Column(name = "name")
-    @Max(value = 20, message = "Name cannot be longer than 20 characters")
+    @Size(max = 20, message = "Name cannot be longer than 20 characters")
     @NotBlank(message = "Name is mandatory")
     private String name;
     
