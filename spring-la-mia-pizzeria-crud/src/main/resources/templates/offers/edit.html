@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${offer.name} + ' Editor'"></title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <header th:replace="fragments/fragments-1 :: header('Edit Offer ' + ${offer.name})"></header>
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form th:action="@{|/offers/edit/${offer.id}|}" th:object="${offer}" method="post">
+                    <input type="hidden" th:field="*{pizza.id}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter offer name"  maxlength="30" th:errorclass="is-invalid" required>
+                        <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                            <ul class="ps-3">
+                                <li th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="startDate" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" id="startDate" th:field="*{startDate}" th:errorclass="is-invalid" required>
+                        <div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
+                            <ul class="ps-3">
+                                <li th:each="error : ${#fields.errors('startDate')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="endDate" class="form-label">End Date</label>
+                        <input type="date" class="form-control" id="endDate" th:field="*{endDate}" th:errorclass="is-invalid" required>
+                        <div th:if="${#fields.hasErrors('endDate')}" class="invalid-feedback">
+                            <ul class="ps-3">
+                                <li th:each="error : ${#fields.errors('endDate')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="btn-group gap-2">
+                            <div>
+                                <button type="submit" class="btn btn-outline-primary">Edit Offer</button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                    th:data-bs-target="'#delete-' + ${offer.id}">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                        <a th:href="@{/pizzas}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+                <div class="modal fade" th:id="'delete-' + ${offer.id}" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="'Offer ' + ${offer.name}"></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" th:text="'Are you sure you want to delete Offer ' + ${offer.name} + '?'"></div>
+                        <div class="modal-footer">
+                            <form th:action="@{'/offers/delete/' + ${offer.id}}" method="POST">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
