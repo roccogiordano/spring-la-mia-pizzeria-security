@@ -48,9 +48,9 @@
                             <div class="modal-body" th:text="'Are you sure you want to delete Pizza ' + ${pizza.name} + '?'"></div>
                             <div class="modal-footer">
                                 <form th:action="@{'/pizzas/delete/' + ${pizza.id}}" method="POST">
-                                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                                 </form>
-                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </div>
                     </div>
