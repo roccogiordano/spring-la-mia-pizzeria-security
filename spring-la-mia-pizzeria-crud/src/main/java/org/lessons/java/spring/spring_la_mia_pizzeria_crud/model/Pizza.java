@@ -1,10 +1,13 @@
 package org.lessons.java.spring.spring_la_mia_pizzeria_crud.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -37,7 +40,10 @@ public class Pizza {
     @NotBlank(message = "Image URL is mandatory")
     private String imageUrl;
 
+    @OneToMany(mappedBy = "pizza")
+    private List<Offer> offers;
 
+    
     // Getters and Setters
 
     public Integer getId() {
@@ -78,6 +84,14 @@ public class Pizza {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
     @Override
