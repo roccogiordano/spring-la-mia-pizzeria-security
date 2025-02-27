@@ -20,7 +20,7 @@ public class Pizza {
     private Integer id;
 
     @Column(name = "name")
-    @Size(max = 20, message = "Name cannot be longer than 20 characters")
+    @Size(max = 30, message = "Name cannot be longer than 20 characters")
     @NotBlank(message = "Name is mandatory")
     private String name;
     
