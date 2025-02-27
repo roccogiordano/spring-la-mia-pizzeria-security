@@ -37,3 +37,12 @@
 </div>
 
 <!-- /Card Fragment -->
+
+
+<!-- Alert Fragment -->
+
+<th:block th:fragment="alert(message, messageClass)" th:if="${message != null}">
+    <div class="alert" th:text="${message}" th:classappend="${messageClass}"></div>
+</th:block>
+
+<!-- /Alert Fragment -->

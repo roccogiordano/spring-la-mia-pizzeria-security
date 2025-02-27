@@ -12,7 +12,8 @@
         <div class="alert alert-warning" th:if="${pizzas.empty}">
             No pizzas available at the moment.
         </div>
-        <div class="alert alert-success" th:if="${message != null}" th:text="${message}"></div>
+
+        <th:block th:replace="fragments/fragments-1 :: alert(${message}, ${messageClass})"></th:block>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" th:unless="${pizzas.empty}">
             <th:block th:each="pizza : ${pizzas}">
