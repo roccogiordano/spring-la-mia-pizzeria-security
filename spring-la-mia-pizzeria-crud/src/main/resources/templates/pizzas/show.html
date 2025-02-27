@@ -1,63 +1,68 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${pizza.name} + ' Details'">Pizza Details</title>
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
 </head>
+
 <body class="bg-light">
     <div class="container py-4">
         <header th:replace="fragments/fragments-1 :: header('Pizza ' + ${pizza.name})"></header>
 
         <div class="card shadow-sm">
-            <img th:src="${pizza.imageUrl}" class="card-img-top" alt="Pizza Image" style="height: 300px; object-fit: cover;">
+            <img th:src="${pizza.imageUrl}" class="card-img-top" alt="Pizza Image"
+                style="height: 300px; object-fit: cover;">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="card-title" th:text="${pizza.name}"></h2>
+                    <strong class="text-body-secondary fs-4"
+                        th:text="'€' + ${#numbers.formatDecimal(pizza.price, 1, 2)}"></strong>
+                </div>
+                <div class="d-flex align-items-center">
+                    <p class="card-text me-3" th:text="${pizza.description}"></p>
                     <div class="d-flex gap-2 align-items-center">
                         <th:block th:each="offer : ${pizza.offers}">
                             <a th:replace="fragments/fragments-1 :: badge(${offer})"></a>
                         </th:block>
                     </div>
                 </div>
-                    <p class="card-text" th:text="${pizza.description}"></p>
                 <div class="d-flex justify-content-between align-items-center">
-                    <strong class="text-body-secondary fs-4" th:text="'€' + ${#numbers.formatDecimal(pizza.price, 1, 2)}"></strong>
+                    <div class="btn-group gap-2">
+                        <div>
+                            <a th:href="@{'/pizzas/' + ${pizza.id} + '/offer'}" class="btn btn-outline-primary">Create
+                                New Offer</a>
+                        </div>
+                        <div>
+                            <a th:href="@{'/pizzas/edit/' + ${pizza.id}}" class="btn btn-outline-secondary">Edit</a>
+                        </div>
+                    </div>
                     <div class="btn-group">
-                        <div class="btn-group gap-4">
-                            <div class="btn-group gap-2">
-                                <div>
-                                    <a th:href="@{'/pizzas/' + ${pizza.id} + '/offer'}" class="btn btn-sm btn-outline-primary">Create New Offer</a>
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#delete-' + ${pizza.id}">
+                            Delete
+                        </button>
+                    </div>
+                    <div class="modal fade" th:id="'delete-' + ${pizza.id}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"
+                                        th:text="'Pizza ' + ${pizza.name}"></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
-                                <div>
-                                    <a th:href="@{'/pizzas/edit/' + ${pizza.id}}" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                </div>
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                    th:data-bs-target="'#delete-' + ${pizza.id}">
-                                    Delete
-                                </button>
-                            </div>
-            
-                            <div class="modal fade" th:id="'delete-' + ${pizza.id}" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="'Pizza ' + ${pizza.name}"></h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body" th:text="'Are you sure you want to delete Pizza ' + ${pizza.name} + '?'"></div>
-                                        <div class="modal-footer">
-                                            <form th:action="@{'/pizzas/delete/' + ${pizza.id}}" method="POST">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                                            </form>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </div>
+                                <div class="modal-body"
+                                    th:text="'Are you sure you want to delete Pizza ' + ${pizza.name} + '?'"></div>
+                                <div class="modal-footer">
+                                    <form th:action="@{'/pizzas/delete/' + ${pizza.id}}" method="POST">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -73,4 +78,5 @@
 
     <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
 </body>
+
 </html>
