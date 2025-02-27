@@ -47,7 +47,7 @@ public class PizzaController {
     }
 
     @GetMapping("/create")
-    public String createPizza(Model model) {
+    public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
         return "create";
     }
@@ -62,6 +62,7 @@ public class PizzaController {
         pizzaRepository.save(pizza);
 
         redirectAttributes.addFlashAttribute("message", String.format("Pizza %s has been succesfully added to the menu!", pizza.getName()));
+        redirectAttributes.addFlashAttribute("messageClass", "alert-success");
 
         return "redirect:/pizzas";
     }
