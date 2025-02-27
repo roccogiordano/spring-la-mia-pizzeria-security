@@ -73,3 +73,10 @@
 </th:block>
 
 <!-- /Alert Fragment -->
+
+
+<!-- Offer Badge Fragment -->
+
+<a th:fragment="badge(offer)" th:href="@{/pizzas}" class="badge text-bg-success link-underline link-underline-opacity-0" th:text="${offer.name} ">Offer Name</a>
+
+<!-- /Offer Badge Fragment -->
