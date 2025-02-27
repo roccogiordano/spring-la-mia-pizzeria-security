@@ -1,5 +1,6 @@
 package org.lessons.java.spring.spring_la_mia_pizzeria_crud.controller;
 
+import org.lessons.java.spring.spring_la_mia_pizzeria_crud.model.Offer;
 import org.lessons.java.spring.spring_la_mia_pizzeria_crud.model.Pizza;
 import org.lessons.java.spring.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,16 @@ public class PizzaController {
         redirectAttributes.addFlashAttribute("messageClass", "alert-danger");
 
         return "redirect:/pizzas";
+    }
+
+    @GetMapping("/{id}/offer")
+    public String offer(@PathVariable("id") Integer id, Model model) {
+
+        Offer offer = new Offer();
+        offer.setPizza(pizzaRepository.findById(id).get());
+    
+        model.addAttribute("offer", offer);
+        return "/offers/create";
     }
 
 }
