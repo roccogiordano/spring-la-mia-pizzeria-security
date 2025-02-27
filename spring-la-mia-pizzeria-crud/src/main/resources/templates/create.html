@@ -17,7 +17,7 @@
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter pizza name" required th:errorclass="is-invalid">
                         <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
-                            <ul>
+                            <ul class="ps-3">
                                 <li th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
                             </ul>
                         </div>
@@ -26,7 +26,7 @@
                         <label for="description" class="form-label">Description</label>
                         <textarea class="form-control" id="description" th:field="*{description}" placeholder="Enter pizza description" required th:errorclass="is-invalid"></textarea>
                         <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
-                            <ul>
+                            <ul class="ps-3">
                                 <li th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
                             </ul>
                         </div>
@@ -35,7 +35,7 @@
                         <label for="price" class="form-label">Price</label>
                         <input type="number" step="0.50" class="form-control" id="price" th:field="*{price}" placeholder="Enter pizza price" required min="1" th:errorclass="is-invalid">
                         <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
-                            <ul>
+                            <ul class="ps-3">
                                 <li th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
                             </ul>
                         </div>
@@ -44,7 +44,7 @@
                         <label for="imageUrl" class="form-label">Image URL</label>
                         <input type="text" class="form-control" id="imageUrl" th:field="*{imageUrl}" placeholder="Enter image URL" required th:errorclass="is-invalid">
                         <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
-                            <ul>
+                            <ul class="ps-3">
                                 <li th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
                             </ul>
                         </div>
