@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 
@@ -52,13 +53,16 @@ public class PizzaController {
     }
  
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model) {
+    public String store(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "create";
         }
         
         pizzaRepository.save(pizza);
+
+        redirectAttributes.addFlashAttribute("message", String.format("Pizza %s has been succesfully added to the menu!", pizza.getName()));
+
         return "redirect:/pizzas";
     }
 
