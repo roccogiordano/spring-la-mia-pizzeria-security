@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,20 +20,21 @@ public class Pizza {
     private Integer id;
 
     @Column(name = "name")
-    @NotBlank(message = "Name is Mandatory")
+    @Max(value = 20, message = "Name cannot be longer than 20 characters")
+    @NotBlank(message = "Name is mandatory")
     private String name;
     
     @Column(name = "description")
-    @NotBlank(message = "Description is Mandatory")
+    @NotBlank(message = "Description is mandatory")
     private String description;
 
     @Column(name = "price")
     @NotNull(message = "Price cannot be null")
-    @Min(value = 0, message = "Price cannot be less than 0")
+    @Min(value = 1, message = "Price cannot be less than €1.00")
     private Double price;
 
     @Column(name = "image_url")
-    @NotBlank(message = "Image URL is Mandatory")
+    @NotBlank(message = "Image URL is mandatory")
     private String imageUrl;
 
 
