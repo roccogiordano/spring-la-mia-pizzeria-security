@@ -29,13 +29,13 @@ public class PizzaController {
     public String getPizzas(Model model) {
         List<Pizza> pizzas = pizzaRepository.findAll();
         model.addAttribute("pizzas", pizzas);
-        return "index";
+        return "/pizzas/index";
     }
 
     @GetMapping("/{id}")
     public String getPizzaById(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("pizza", pizzaRepository.findById(id).get());
-        return "/show";
+        return "/pizzas/show";
         
     }   
 
@@ -43,20 +43,20 @@ public class PizzaController {
     public String findPizzaByName(@RequestParam(name = "name") String name, Model model) {
         List<Pizza> pizzas = pizzaRepository.findByNameContaining(name);
         model.addAttribute("pizzas", pizzas);
-        return "index";
+        return "/pizzas/index";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
-        return "create";
+        return "/pizzas/create";
     }
  
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            return "create";
+            return "/pizzas/create";
         }
         
         pizzaRepository.save(pizza);
@@ -70,14 +70,14 @@ public class PizzaController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("pizza", pizzaRepository.findById(id).get());
-        return "edit";
+        return "/pizzas/edit";
     }
  
     @PostMapping("/edit/{id}")
     public String update(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            return "edit";
+            return "/pizzas/edit";
         }
         
         pizzaRepository.save(pizza);
