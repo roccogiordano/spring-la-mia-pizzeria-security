@@ -5,7 +5,7 @@
     <form class="d-flex" role="search" method="GET" th:action="@{/pizzas/search}">
         <input class="form-control me-2" type="search" name="name" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-primary" type="submit">&#128269;</button>
-      </form>
+    </form>
 </header>
 
 <!-- /Header Fragment -->
@@ -28,13 +28,37 @@
                     <a th:href="@{'/pizzas/' + ${pizza.id}}" class="btn btn-sm btn-outline-primary">View Details</a>
                     <a th:href="@{'/pizzas/edit/' + ${pizza.id}}" class="btn btn-sm btn-outline-secondary">Edit</a>
                 </div>
-                <form th:action="@{'/pizzas/delete/' + ${pizza.id}}" method="POST">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                </form>
+
+                <div>
+                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                        th:data-bs-target="'#delete-' + ${pizza.id}">
+                        Delete
+                    </button>
+                </div>
+
+                <div class="modal fade" th:id="'delete-' + ${pizza.id}" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="'Pizza ' + ${pizza.name}"></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" th:text="'Are you sure you want to delete Pizza ' + ${pizza.name} + '?'"></div>
+                            <div class="modal-footer">
+                                <form th:action="@{'/pizzas/delete/' + ${pizza.id}}" method="POST">
+                                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                </form>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</div> 
 
 <!-- /Card Fragment -->
 

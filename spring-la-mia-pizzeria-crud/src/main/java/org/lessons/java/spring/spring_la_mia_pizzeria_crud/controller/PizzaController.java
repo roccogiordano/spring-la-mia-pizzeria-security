@@ -88,4 +88,16 @@ public class PizzaController {
         return "redirect:/pizzas";
     }
 
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+
+        Pizza pizza = pizzaRepository.findById(id).get();
+        pizzaRepository.delete(pizza);
+
+        redirectAttributes.addFlashAttribute("message", String.format("Pizza %s has been succesfully deleted!", pizza.getName()));
+        redirectAttributes.addFlashAttribute("messageClass", "alert-danger");
+
+        return "redirect:/pizzas";
+    }
+
 }
