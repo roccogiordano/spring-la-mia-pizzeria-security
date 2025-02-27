@@ -15,7 +15,7 @@
                 <form th:action="@{/pizzas/create}" th:object="${pizza}" method="post">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter pizza name" required th:errorclass="is-invalid">
+                        <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter pizza name" required maxlength="20" th:errorclass="is-invalid">
                         <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
                             <ul class="ps-3">
                                 <li th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
