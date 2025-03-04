@@ -9,7 +9,8 @@
 <body class="bg-light">
     <div class="container py-4">
         <header th:replace="fragments/fragments-1 :: header('Edit Offer ' + ${offer.name})"></header>
-        
+        <input type="hidden" th:field="*{pizza.id}">
+        <input type="hidden" th:field="*{pizza.name}">
         <div class="card shadow-sm">
             <div class="card-body">
                 <form th:action="@{|/offers/edit/${offer.id}|}" th:object="${offer}" method="post">

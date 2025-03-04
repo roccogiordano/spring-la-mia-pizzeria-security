@@ -14,6 +14,7 @@
             <div class="card-body">
                 <form th:action="@{/offers/create}" th:object="${offer}" method="post">
                     <input type="hidden" th:field="*{pizza.id}">
+                    <input type="hidden" th:field="*{pizza.name}">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter offer name"  maxlength="30" th:errorclass="is-invalid" required>
