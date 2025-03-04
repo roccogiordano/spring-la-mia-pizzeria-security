@@ -27,21 +27,21 @@ public class PizzaController {
     private PizzaRepository pizzaRepository;
 
     @GetMapping
-    public String getPizzas(Model model) {
+    public String view(Model model) {
         List<Pizza> pizzas = pizzaRepository.findAll();
         model.addAttribute("pizzas", pizzas);
         return "/pizzas/index";
     }
 
     @GetMapping("/{id}")
-    public String getPizzaById(@PathVariable("id") Integer id, Model model) {
+    public String show(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("pizza", pizzaRepository.findById(id).get());
         return "/pizzas/show";
         
     }   
 
     @GetMapping("/search")
-    public String findPizzaByName(@RequestParam(name = "name") String name, Model model) {
+    public String search(@RequestParam(name = "name") String name, Model model) {
         List<Pizza> pizzas = pizzaRepository.findByNameContaining(name);
         model.addAttribute("pizzas", pizzas);
         return "/pizzas/index";

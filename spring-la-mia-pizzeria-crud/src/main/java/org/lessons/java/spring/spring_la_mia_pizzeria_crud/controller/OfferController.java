@@ -37,7 +37,7 @@ public class OfferController {
         return "redirect:/pizzas";
     }
 
-        @GetMapping("/edit/{id}")
+    @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("offer", offerRepository.findById(id).get());
         return "/offers/edit";
