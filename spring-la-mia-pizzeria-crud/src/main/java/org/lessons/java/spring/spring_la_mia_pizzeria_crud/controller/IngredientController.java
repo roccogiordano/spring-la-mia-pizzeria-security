@@ -3,6 +3,7 @@ package org.lessons.java.spring.spring_la_mia_pizzeria_crud.controller;
 import java.util.List;
 
 import org.lessons.java.spring.spring_la_mia_pizzeria_crud.model.Ingredient;
+import org.lessons.java.spring.spring_la_mia_pizzeria_crud.model.Pizza;
 import org.lessons.java.spring.spring_la_mia_pizzeria_crud.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,10 +74,15 @@ public class IngredientController {
         return "redirect:/ingredients";
     }
 
-        @PostMapping("/delete/{id}")
-        public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 
         Ingredient ingredient = ingredientRepository.findById(id).get();
+
+        for (Pizza pizza : ingredient.getPizzas()) {
+            pizza.getIngredients().remove(ingredient);
+        }
+
         ingredientRepository.delete(ingredient);
 
         redirectAttributes.addFlashAttribute("message", String.format("Ingredient %s has been succesfully deleted!", ingredient.getName()));
