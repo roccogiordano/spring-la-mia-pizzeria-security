@@ -1,11 +1,14 @@
 package org.lessons.java.spring.spring_la_mia_pizzeria_crud.model;
 
+import java.util.List;
+
 import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -25,7 +28,10 @@ public class Ingredient {
     @Nullable
     private String allergens;
 
-    
+    @ManyToMany(mappedBy = "ingredients")
+    private List<Pizza> pizzas;
+
+
     // Getters and Setters
 
     public Integer getId() {
@@ -50,6 +56,14 @@ public class Ingredient {
 
     public void setAllergens(String allergens) {
         this.allergens = allergens;
+    }
+
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
+
+    public void setPizzas(List<Pizza> pizzas) {
+        this.pizzas = pizzas;
     }
 
     @Override
