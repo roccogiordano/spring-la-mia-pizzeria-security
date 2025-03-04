@@ -73,5 +73,16 @@ public class IngredientController {
         return "redirect:/ingredients";
     }
 
+        @PostMapping("/delete/{id}")
+        public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+
+        Ingredient ingredient = ingredientRepository.findById(id).get();
+        ingredientRepository.delete(ingredient);
+
+        redirectAttributes.addFlashAttribute("message", String.format("Ingredient %s has been succesfully deleted!", ingredient.getName()));
+        redirectAttributes.addFlashAttribute("messageClass", "alert-danger");
+
+        return "redirect:/ingredients";
+    }
 
 }
