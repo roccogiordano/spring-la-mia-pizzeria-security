@@ -36,7 +36,7 @@
                                 New Offer</a>
                         </div>
                         <div>
-                            <a th:href="@{'/pizzas/edit/' + ${pizza.id}}" class="btn btn-outline-secondary">Edit</a>
+                            <a th:href="@{'/pizzas/edit/' + ${pizza.id}}" class="btn btn-outline-secondary">Edit Pizza</a>
                         </div>
                     </div>
                     <div class="btn-group">
@@ -71,6 +71,14 @@
             </div>
         </div>
 
+        <div class="mt-4 card shadow-sm" th:unless="${#lists.isEmpty(pizza.ingredients)}">
+            <div class="card-body px-0">
+                <ul class="d-flex flex-wrap gap-5 my-0">
+                    <li th:each="ingredient : ${pizza.ingredients}" th:text="${ingredient.name}" class="fst-italic"></li>
+                </ul>
+            </div>
+        </div>
+        
         <div class="mt-4">
             <a th:href="@{/pizzas}" class="btn btn-primary">Back to Menu</a>
         </div>
