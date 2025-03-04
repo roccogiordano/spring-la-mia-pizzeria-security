@@ -108,10 +108,34 @@
                 <td th:text="${ingredient.name}"></td>
                 <td th:text="${ingredient.allergens}"></td>
                 <td>
-                    <a th:href="@{'/ingredients/edit/' + ${ingredient.id}}" type="button" class="btn btn-outline-secondary btn-sm rounded-1 border-1"><i
-                            class="fa-solid fa-pencil"></i></a>
-                    <a th:href="@{'/ingredients/delete/' + ${ingredient.id}}" type="button" class="btn btn-outline-danger btn-sm rounded-1 border-1"><i
-                            class="fa-solid fa-trash"></i></a>
+                    <a th:href="@{'/ingredients/edit/' + ${ingredient.id}}" type="button"
+                        class="btn btn-sm btn-outline-secondary rounded-1 border-1"><i class="fa-solid fa-pencil"></i></a>
+                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                        th:data-bs-target="'#delete-' + ${ingredient.id}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <div class="modal fade" th:id="'delete-' + ${ingredient.id}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"
+                                        th:text="'Ingredient ' + ${ingredient.name}"></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body"
+                                    th:text="'Are you sure you want to delete Ingredient ' + ${ingredient.name} + '?'"></div>
+                                <div class="modal-footer">
+                                    <form th:action="@{'/ingredients/delete/' + ${ingredient.id}}" method="POST">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </tbody>
