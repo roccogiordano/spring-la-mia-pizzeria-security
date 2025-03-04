@@ -22,7 +22,8 @@
         </div>
 
         <div class="mt-4 d-flex justify-content-between">
-            <a href="/pizzas/create" class="btn btn-success">Add New Pizza</a>
+            <a th:href="@{/pizzas/create}" class="btn btn-success">Add New Pizza</a>
+            <a th:href="@{/ingredients}" class="btn btn-primary" th:unless="${pizzas.empty}">View Ingredients</a>
             <a th:href="@{/pizzas}" class="btn btn-primary" th:if="${pizzas.empty}">Back to Menu</a>
         </div>
     </div>
