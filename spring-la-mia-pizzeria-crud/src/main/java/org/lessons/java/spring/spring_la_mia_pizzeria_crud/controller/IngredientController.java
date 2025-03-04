@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -50,5 +51,27 @@ public class IngredientController {
 
         return "redirect:/ingredients";
     }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("ingredient", ingredientRepository.findById(id).get());
+        return "/ingredients/edit";
+    }
+ 
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute("ingredient") Ingredient ingredient, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            return "/ingredients/edit";
+        }
+        
+        ingredientRepository.save(ingredient);
+
+        redirectAttributes.addFlashAttribute("message", String.format("Ingredient %s has been succesfully edited!", ingredient.getName()));
+        redirectAttributes.addFlashAttribute("messageClass", "alert-info");
+
+        return "redirect:/ingredients";
+    }
+
 
 }
