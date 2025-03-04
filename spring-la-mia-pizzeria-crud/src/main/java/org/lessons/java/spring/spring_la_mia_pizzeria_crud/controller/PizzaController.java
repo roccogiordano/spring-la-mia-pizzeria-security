@@ -2,6 +2,7 @@ package org.lessons.java.spring.spring_la_mia_pizzeria_crud.controller;
 
 import org.lessons.java.spring.spring_la_mia_pizzeria_crud.model.Offer;
 import org.lessons.java.spring.spring_la_mia_pizzeria_crud.model.Pizza;
+import org.lessons.java.spring.spring_la_mia_pizzeria_crud.repository.IngredientRepository;
 import org.lessons.java.spring.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class PizzaController {
 
     @Autowired
     private PizzaRepository pizzaRepository;
+
+    @Autowired
+    private IngredientRepository ingredientRepository;
 
     @GetMapping
     public String view(Model model) {
@@ -50,6 +54,7 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredients", ingredientRepository.findAll());
         return "/pizzas/create";
     }
  
@@ -57,6 +62,7 @@ public class PizzaController {
     public String store(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("ingredients", ingredientRepository.findAll());
             return "/pizzas/create";
         }
         
@@ -71,6 +77,7 @@ public class PizzaController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("pizza", pizzaRepository.findById(id).get());
+        model.addAttribute("ingredients", ingredientRepository.findAll());
         return "/pizzas/edit";
     }
  
@@ -78,6 +85,7 @@ public class PizzaController {
     public String update(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("ingredients", ingredientRepository.findAll());
             return "/pizzas/edit";
         }
         
