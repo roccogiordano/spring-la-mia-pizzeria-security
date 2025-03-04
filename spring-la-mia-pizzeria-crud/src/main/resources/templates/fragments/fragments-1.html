@@ -96,18 +96,16 @@
     <table class="table table-bordered table-hover align-middle">
         <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Allergens</th>
-                <th scope="col">Actions</th>
+                <th scope="col" class="text-end">Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="ingredient : ${ingredients}">
-                <th scope="row" th:text="${ingredient.id}"></th>
                 <td th:text="${ingredient.name}"></td>
                 <td th:text="${ingredient.allergens}"></td>
-                <td>
+                <td class="text-end">
                     <a th:href="@{'/ingredients/edit/' + ${ingredient.id}}" type="button"
                         class="btn btn-sm btn-outline-secondary rounded-1 border-1"><i class="fa-solid fa-pencil"></i></a>
                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
