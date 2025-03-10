@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${ingredient.name} + ' Details'">Ingredient Details</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+</head>
+
+<body class="bg-light">
+    <div class="container py-4">
+        <header th:replace="fragments/fragments-1 :: header('Ingredient ' + ${ingredient.name})"></header>
+
+        <div class="card shadow-sm">
+            <img src="https://images.wallpaperscraft.com/image/single/pizza_pastry_appetizing_104513_1600x900.jpg" class="card-img-top" alt="Ingredient Image"
+                style="height: 300px; object-fit: cover;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="card-title" th:text="${ingredient.name}"></h2>
+                </div>
+                <div class="d-flex align-items-center">
+                    <th:block th:unless="${ingredient.allergens.empty}" th:each="allergen : ${ingredient.allergens}">
+                        <span th:replace="fragments/fragments-1 :: allergenBadge(${allergen})"></span>
+                    </th:block>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <div>
+                            <a th:href="@{'/ingredients/edit/' + ${ingredient.id}}" class="btn btn-outline-secondary">Edit Ingredient</a>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#delete-' + ${ingredient.id}">
+                            Delete
+                        </button>
+                    </div>
+                    <div class="modal fade" th:id="'delete-' + ${ingredient.id}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"
+                                        th:text="'Ingredient ' + ${ingredient.name}"></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body"
+                                    th:text="'Are you sure you want to delete ingredient ' + ${ingredient.name} + '?'"></div>
+                                <div class="modal-footer">
+                                    <form th:action="@{'/ingredients/delete/' + ${ingredient.id}}" method="POST">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 card shadow-sm" th:unless="${#lists.isEmpty(ingredient.pizzas)}">
+            <div class="card-body px-0">
+                <ul class="d-flex flex-wrap gap-5 my-0">
+                    <li th:each="pizza : ${ingredient.pizzas}" th:text="${pizza.name}" class="fst-italic"></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <a th:href="@{/ingredients}" class="btn btn-primary">Back to Ingredients</a>
+        </div>
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
