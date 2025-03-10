@@ -84,10 +84,18 @@
 
 <!-- Offer Badge Fragment -->
 
-<a th:fragment="badge(offer)" th:href="@{|/offers/edit/${offer.id}|}"
+<a th:fragment="offerBadge(offer)" th:href="@{|/offers/edit/${offer.id}|}"
     class="badge text-bg-success link-underline link-underline-opacity-0 mb-3" th:text="${offer.name} ">Offer Name</a>
 
 <!-- /Offer Badge Fragment -->
+
+
+<!-- Allergen Badge Fragment -->
+
+<span th:fragment="allergenBadge(allergen)" 
+    class="badge text-bg-warning mb-3" th:text="${allergen}">Allergen</span>
+
+<!-- /Allergen Badge Fragment -->
 
 
 <!-- Table Fragment -->
@@ -106,6 +114,8 @@
                 <td th:text="${ingredient.name}"></td>
                 <td th:text="${ingredient.allergens}"></td>
                 <td class="text-end">
+                    <a th:href="@{'/ingredients/show/' + ${ingredient.id}}" type="button"
+                        class="btn btn-sm btn-outline-primary rounded-1 border-1"><i class="fa-solid fa-eye"></i></a>
                     <a th:href="@{'/ingredients/edit/' + ${ingredient.id}}" type="button"
                         class="btn btn-sm btn-outline-secondary rounded-1 border-1"><i class="fa-solid fa-pencil"></i></a>
                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
