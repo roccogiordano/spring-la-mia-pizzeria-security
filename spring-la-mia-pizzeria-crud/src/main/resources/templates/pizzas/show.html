@@ -25,7 +25,7 @@
                     <p class="card-text me-3" th:text="${pizza.description}"></p>
                     <div class="d-flex gap-2 align-items-center">
                         <th:block th:each="offer : ${pizza.offers}">
-                            <a th:replace="fragments/fragments-1 :: badge(${offer})"></a>
+                            <a th:replace="fragments/fragments-1 :: offerBadge(${offer})"></a>
                         </th:block>
                     </div>
                 </div>
