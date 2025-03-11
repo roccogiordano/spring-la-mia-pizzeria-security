@@ -23,14 +23,14 @@
                         th:text="'€' + ${#numbers.formatDecimal(pizza.price, 1, 2)}"></strong>
                 </div>
                 <div class="d-flex align-items-center">
-                    <p class="card-text me-3" th:text="${pizza.description}"></p>
+                    <p class="card-text me-3 mb-0" th:text="${pizza.description}"></p>
                     <div class="d-flex gap-2 align-items-center">
                         <th:block th:each="offer : ${pizza.offers}">
                             <a th:replace="fragments/fragments-1 :: offerBadge(${offer})"></a>
                         </th:block>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center mt-3" sec:authorize="hasAuthority('ADMIN')">
                     <div class="btn-group gap-2">
                         <div>
                             <a th:href="@{'/pizzas/' + ${pizza.id} + '/offer'}" class="btn btn-outline-primary">Create
