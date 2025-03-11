@@ -48,7 +48,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body"
-                                    th:text="'Are you sure you want to delete ingredient ' + ${ingredient.name} + '?'"></div>
+                                    th:text="'Are you sure you want to delete Ingredient ' + ${ingredient.name} + '?'"></div>
                                 <div class="modal-footer">
                                     <form th:action="@{'/ingredients/delete/' + ${ingredient.id}}" method="POST">
                                         <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
