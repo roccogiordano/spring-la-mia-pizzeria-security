@@ -3,6 +3,8 @@ package org.lessons.java.spring.spring_la_mia_pizzeria_crud.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +41,7 @@ public class Offer {
     @ManyToOne
     @JoinColumn(name = "pizza_id", nullable = false)
     @NotNull(message = "Pizza ID is mandatory")
+    @JsonIgnore
     private Pizza pizza;
 
 
