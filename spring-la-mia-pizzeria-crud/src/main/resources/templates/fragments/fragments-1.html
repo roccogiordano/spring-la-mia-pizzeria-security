@@ -135,7 +135,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body"
+                                <div class="modal-body text-start"
                                     th:text="'Are you sure you want to delete Ingredient ' + ${ingredient.name} + '?'"></div>
                                 <div class="modal-footer">
                                     <form th:action="@{'/ingredients/delete/' + ${ingredient.id}}" method="POST">
