@@ -2,10 +2,13 @@
 
 <header th:fragment="header(text)" class="pb-3 mb-4 border-bottom d-flex justify-content-between align-items-center">
     <h1 class="display-4 text-primary" th:text="${text}">Pizzeria Bella Napoli</h1>
-    <form class="d-flex" role="search" method="GET" th:action="@{/pizzas/search}">
-        <input class="form-control me-2" type="search" name="name" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-primary" type="submit">&#128269;</button>
-    </form>
+    <div class="d-flex gap-3">
+        <form class="d-flex" role="search" method="GET" th:action="@{/pizzas/search}">
+            <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input class="form-control ms-2" type="search" name="name" placeholder="Search" aria-label="Search">
+        </form>
+        <a class="btn btn-outline-danger" th:href="@{'/logout'}"><i class="fa-solid fa-power-off"></i></a>
+    </div>
 </header>
 
 <!-- /Header Fragment -->
@@ -28,12 +31,12 @@
                     <div>
                         <a th:href="@{'/pizzas/' + ${pizza.id}}" class="btn btn-sm btn-outline-primary">View Details</a>
                     </div>
-                    <div>
+                    <div sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="@{'/pizzas/edit/' + ${pizza.id}}" class="btn btn-sm btn-outline-secondary">Edit</a>
                     </div>
                 </div>
 
-                <div>
+                <div sec:authorize="hasAuthority('ADMIN')">
                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
                         th:data-bs-target="'#delete-' + ${pizza.id}">
                         Delete
@@ -93,7 +96,7 @@
 <!-- Allergen Badge Fragment -->
 
 <span th:fragment="allergenBadge(allergen)" 
-    class="badge text-bg-warning mb-3" th:text="${allergen}">Allergen</span>
+    class="badge text-bg-warning" th:text="${allergen}">Allergen</span>
 
 <!-- /Allergen Badge Fragment -->
 
@@ -117,9 +120,9 @@
                     <a th:href="@{'/ingredients/show/' + ${ingredient.id}}" type="button"
                         class="btn btn-sm btn-outline-primary rounded-1 border-1"><i class="fa-solid fa-eye"></i></a>
                     <a th:href="@{'/ingredients/edit/' + ${ingredient.id}}" type="button"
-                        class="btn btn-sm btn-outline-secondary rounded-1 border-1"><i class="fa-solid fa-pencil"></i></a>
+                        class="btn btn-sm btn-outline-secondary rounded-1 border-1" sec:authorize="hasAuthority('ADMIN')"><i class="fa-solid fa-pencil"></i></a>
                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                        th:data-bs-target="'#delete-' + ${ingredient.id}">
+                        th:data-bs-target="'#delete-' + ${ingredient.id}" sec:authorize="hasAuthority('ADMIN')">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                     <div class="modal fade" th:id="'delete-' + ${ingredient.id}" tabindex="-1"
