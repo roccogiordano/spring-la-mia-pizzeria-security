@@ -18,12 +18,12 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
-    DaoAuthenticationProvider authenticationProvider(){
+    DaoAuthenticationProvider authenticationProvider() {
 
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
@@ -32,35 +32,51 @@ public class SecurityConfiguration {
 
         return authProvider;
     }
-    
+
     @Bean
     @SuppressWarnings("removal")
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    
+
         http.authorizeHttpRequests()
 
-            // Static Resources
-            .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-    
-            // ADMIN Routes
-            .requestMatchers("/pizzas/create", "/pizzas/edit/**").hasAuthority("ADMIN")
-            .requestMatchers(HttpMethod.POST, "/pizzas/**").hasAuthority("ADMIN")
-            .requestMatchers("/pizzas/{id}/offer", "/offers/edit/**").hasAuthority("ADMIN")
-            .requestMatchers(HttpMethod.POST, "/offers/**").hasAuthority("ADMIN")
-            .requestMatchers("/ingredients/create", "/ingredients/edit/**").hasAuthority("ADMIN")
-            .requestMatchers(HttpMethod.POST, "/ingredients/**").hasAuthority("ADMIN")
-    
-            // USER and ADMIN Routes
-            .requestMatchers("/pizzas", "/pizzas/**", "/offers", "/offers/**", "/ingredients", "/ingredients/**")
+                // Static Resources
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+
+                // ADMIN Routes
+                .requestMatchers("/pizzas/create", "/pizzas/edit/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/pizzas/**").hasAuthority("ADMIN")
+                .requestMatchers("/pizzas/{id}/offer", "/offers/edit/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/offers/**").hasAuthority("ADMIN")
+                .requestMatchers("/ingredients/create", "/ingredients/edit/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/ingredients/**").hasAuthority("ADMIN")
+
+                // USER and ADMIN Routes
+                .requestMatchers("/pizzas", "/pizzas/**", "/offers", "/offers/**", "/ingredients", "/ingredients/**")
                 .hasAnyAuthority("USER", "ADMIN")
+
+                // All other requests
+                .anyRequest().permitAll();
+
+
+                http.formLogin(form -> form
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
+                    .defaultSuccessUrl("/pizzas", true)
+                    .permitAll()
+                );
     
-            // All other requests
-            .anyRequest().permitAll()
+                http.logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login?logout")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll()
+                );
     
-            .and().formLogin()
-            .and().logout()
-            .and().exceptionHandling();
-    
+                http.exceptionHandling(exception -> exception
+                    .accessDeniedPage("/access-denied")
+                );
+
         return http.build();
     }
 
